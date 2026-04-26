@@ -1,0 +1,108 @@
+@font-face {
+  font-family: 'Rhapsody Script';
+  src: url('/fonts/Rhapsody Script.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TT Ramillas';
+  src: url('/fonts/TT Ramillas Trial Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'TT Ramillas';
+  src: url('/fonts/TT Ramillas Trial Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+:root {
+  --color-bg-dark: #2A1B16;
+  --color-bg-light: #FDF9F1;
+  --color-gold: #C09A5B;
+  --color-gold-light: #E4C88E;
+  --color-text-light: #FDF9F1;
+  --color-text-dark: #2A1B16;
+  
+  --font-heading: 'Rhapsody Script', cursive;
+  --font-body: 'TT Ramillas', serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg-dark);
+  color: var(--color-gold);
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .heading-font {
+  font-family: var(--font-heading);
+  font-weight: normal;
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height untuk browser mobile modern */
+  background-color: var(--color-bg-dark);
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  overflow: hidden;
+}
+
+/* Ornamental Borders (CSS fallback since we don't have separate PNGs) */
+.ornament-border {
+  position: relative;
+  padding: 2rem;
+  border: 2px solid var(--color-gold);
+  border-radius: 12px;
+  margin: 1rem;
+}
+
+.ornament-corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--color-gold);
+  border-radius: 50%;
+}
+
+.corner-tl { top: -10px; left: -10px; border-bottom: none; border-right: none; }
+.corner-tr { top: -10px; right: -10px; border-bottom: none; border-left: none; }
+.corner-bl { bottom: -10px; left: -10px; border-top: none; border-right: none; }
+.corner-br { bottom: -10px; right: -10px; border-top: none; border-left: none; }
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+}
+
+.btn-primary {
+  background-color: var(--color-gold);
+  color: var(--color-bg-dark);
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-gold-light);
+  transform: translateY(-2px);
+}
