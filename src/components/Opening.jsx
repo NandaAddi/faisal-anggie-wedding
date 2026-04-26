@@ -135,8 +135,8 @@ const Opening = ({ isOpen }) => {
 
       {/* Left Gate */}
       <motion.div
-        initial={{ x: 0 }}
-        animate={{ x: isOpen ? '-100%' : 0 }}
+        initial={{ x: 5 }} // Overlap lebih besar ke kanan
+        animate={{ x: isOpen ? '-100%' : 5 }}
         transition={{ duration: 2.5, ease: 'easeInOut', delay: 1 }}
         style={{
           position: 'absolute',
@@ -160,8 +160,8 @@ const Opening = ({ isOpen }) => {
 
       {/* Right Gate */}
       <motion.div
-        initial={{ x: 0 }}
-        animate={{ x: isOpen ? '100%' : 0 }}
+        initial={{ x: -5 }} // Overlap lebih besar ke kiri
+        animate={{ x: isOpen ? '100%' : -5 }}
         transition={{ duration: 2.5, ease: 'easeInOut', delay: 1 }}
         style={{
           position: 'absolute',

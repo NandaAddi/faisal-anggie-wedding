@@ -6,6 +6,7 @@ const Wishes = () => {
   const [wishes, setWishes] = useState([]);
   const [name, setName] = useState('');
   const [attendance, setAttendance] = useState('Hadir');
+  const [guestCount, setGuestCount] = useState(1);
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,17 +43,33 @@ const Wishes = () => {
     
     setIsSubmitting(true);
     
+    const finalGuestCount = attendance === 'Hadir' ? parseInt(guestCount) : 0;
+    
     try {
       const { error } = await supabase
         .from('wishes')
-        .insert([{ name, attendance, message }]);
+        .insert([{ 
+          name, 
+          attendance, 
+          message,
+          guest_count: finalGuestCount
+        }]);
 
       if (error) {
-        alert('Koneksi Supabase belum diatur atau tabel belum ada.');
+        alert('Gagal mengirim ucapan. Pastikan kolom di Supabase sudah sesuai.');
         console.error(error);
       } else {
+        // Send WhatsApp Message
+        const waNumber = "6282257673346";
+        const statusEmoji = attendance === 'Hadir' ? '✅ Hadir' : attendance === 'Tidak Hadir' ? '❌ Tidak Hadir' : '❓ Ragu-ragu';
+        const waText = `*KONFIRMASI KEHADIRAN (RSVP)*\n--------------------------------------------\nAssalamu'alaikum Wr. Wb / Halo Mempelai,\n\nMelalui pesan ini, saya bermaksud memberikan konfirmasi kehadiran untuk acara pernikahan:\n\n*Anggie Nadyasyifa & M. Faizal Riski*\n\nBerikut adalah detail konfirmasi saya:\n\n🤵 *Nama:* ${name}\n📊 *Status Kehadiran:* ${statusEmoji}\n${attendance === 'Hadir' ? `👥 *Jumlah Orang:* ${finalGuestCount} Orang\n` : ''}\n💌 *Ucapan & Doa:*\n"${message}"\n\nTerima kasih banyak atas undangannya. Kami mendoakan semoga acara berjalan lancar dan menjadi keluarga yang Sakinah Mawaddah Warahmah.\n\n--------------------------------------------`;
+        const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(waText)}`;
+        
+        window.open(waUrl, '_blank');
+
         setName('');
         setAttendance('Hadir');
+        setGuestCount(1);
         setMessage('');
         fetchWishes(); // Refresh list
       }
@@ -207,8 +224,35 @@ const Wishes = () => {
             >
               <option value="Hadir">Hadir</option>
               <option value="Tidak Hadir">Tidak Hadir</option>
+              <option value="Ragu">Ragu</option>
             </select>
           </div>
+
+          {attendance === 'Hadir' && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              transition={{ duration: 0.3 }}
+            >
+              <label style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.85rem', color: '#E4C88E' }}>Membawa Berapa Orang?</label>
+              <input 
+                type="number" 
+                min="1"
+                value={guestCount}
+                onChange={(e) => setGuestCount(e.target.value)}
+                style={{ 
+                  width: '100%', 
+                  padding: '10px', 
+                  borderRadius: '4px', 
+                  border: '1px solid rgba(228, 200, 142, 0.5)', 
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)', 
+                  color: '#FDF9F1',
+                  fontFamily: 'var(--font-body)',
+                  outline: 'none'
+                }} 
+              />
+            </motion.div>
+          )}
 
           <div>
             <label style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.85rem', color: '#E4C88E' }}>Ucapan & Doa</label>

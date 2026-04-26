@@ -17,6 +17,9 @@ const WishesList = () => {
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'wishes' }, payload => {
         setWishes(prev => [payload.new, ...prev]);
       })
+      .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'wishes' }, payload => {
+        setWishes(prev => prev.map(wish => wish.id === payload.new.id ? payload.new : wish));
+      })
       .subscribe();
 
     return () => {
@@ -123,8 +126,33 @@ const WishesList = () => {
         }}>
           Buku Tamu
         </h3>
-
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <style>
+          {`
+            .wishes-scroll-container::-webkit-scrollbar {
+              width: 4px;
+            }
+            .wishes-scroll-container::-webkit-scrollbar-track {
+              background: rgba(42, 27, 22, 0.5); 
+              border-radius: 4px;
+            }
+            .wishes-scroll-container::-webkit-scrollbar-thumb {
+              background: #E4C88E; 
+              border-radius: 4px;
+            }
+          `}
+        </style>
+        <div 
+          className="wishes-scroll-container"
+          style={{ 
+            flex: 1, 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '1rem',
+            maxHeight: '380px',
+            overflowY: 'auto',
+            paddingRight: '8px'
+          }}
+        >
           {isLoading ? (
             <p style={{ textAlign: 'center', color: '#FDF9F1' }}>Memuat ucapan...</p>
           ) : currentWishes.length === 0 ? (
@@ -144,8 +172,8 @@ const WishesList = () => {
                     fontSize: '0.7rem', 
                     padding: '2px 6px', 
                     borderRadius: '4px', 
-                    backgroundColor: wish.attendance === 'Hadir' ? 'rgba(76, 175, 80, 0.2)' : 'rgba(244, 67, 54, 0.2)',
-                    color: wish.attendance === 'Hadir' ? '#81C784' : '#E57373',
+                    backgroundColor: wish.attendance === 'Hadir' ? 'rgba(76, 175, 80, 0.2)' : wish.attendance === 'Tidak Hadir' ? 'rgba(244, 67, 54, 0.2)' : 'rgba(255, 152, 0, 0.2)',
+                    color: wish.attendance === 'Hadir' ? '#81C784' : wish.attendance === 'Tidak Hadir' ? '#E57373' : '#FFB74D',
                     fontWeight: 'bold'
                   }}>
                     {wish.attendance}
@@ -154,8 +182,23 @@ const WishesList = () => {
                 <p style={{ color: '#FDF9F1', fontSize: '0.85rem', lineHeight: '1.4', margin: '0 0 0.3rem 0', wordBreak: 'break-word' }}>
                   {wish.message}
                 </p>
+                
+                {wish.reply && (
+                  <div style={{ 
+                    marginTop: '0.5rem', 
+                    marginBottom: '0.5rem', 
+                    padding: '0.6rem', 
+                    backgroundColor: 'rgba(228, 200, 142, 0.1)', 
+                    borderLeft: '3px solid #E4C88E',
+                    borderRadius: '0 4px 4px 0'
+                  }}>
+                    <p style={{ margin: '0 0 0.2rem 0', fontSize: '0.75rem', color: '#E4C88E', fontWeight: 'bold' }}>Mempelai Membalas:</p>
+                    <p style={{ margin: 0, color: '#FDF9F1', fontSize: '0.8rem', fontStyle: 'italic' }}>"{wish.reply}"</p>
+                  </div>
+                )}
+
                 {wish.created_at && (
-                  <span style={{ fontSize: '0.7rem', color: 'rgba(253, 249, 241, 0.5)' }}>
+                  <span style={{ fontSize: '0.7rem', color: 'rgba(253, 249, 241, 0.5)', display: 'block', marginTop: '0.3rem' }}>
                     {formatDate(wish.created_at)}
                   </span>
                 )}

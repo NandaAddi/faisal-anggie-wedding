@@ -16,14 +16,16 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [guestName, setGuestName] = useState('Tamu Undangan');
+  const [invitationType, setInvitationType] = useState('wanita');
 
   useEffect(() => {
-    // Ambil nama tamu dari URL (contoh: ?to=Budi+Santoso)
+    // Ambil nama tamu dan tipe undangan dari URL
     const params = new URLSearchParams(window.location.search);
     const to = params.get('to');
-    if (to) {
-      setGuestName(to);
-    }
+    const type = params.get('type');
+    
+    if (to) setGuestName(to);
+    if (type === 'pria' || type === 'wanita') setInvitationType(type);
   }, []);
 
   const audioRef = useRef(null);
@@ -35,8 +37,18 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (isOpen) {
+    if (window.location.pathname === '/admin') {
       document.body.style.overflowY = 'auto';
+      return;
+    }
+
+    let timer;
+    if (isOpen) {
+      // Tunggu animasi gerbang selesai (3.5 detik) sebelum bisa di-scroll
+      timer = setTimeout(() => {
+        document.body.style.overflowY = 'auto';
+      }, 3500);
+      
       window.scrollTo(0, 0);
       if (audioRef.current) {
         audioRef.current.play().catch(err => console.log("Audio play blocked:", err));
@@ -47,6 +59,7 @@ function App() {
     }
 
     return () => {
+      if (timer) clearTimeout(timer);
       document.body.style.overflowY = 'auto';
     };
   }, [isOpen]);
@@ -98,7 +111,7 @@ function App() {
       <main style={{ opacity: isOpen ? 1 : 0, transition: 'opacity 1s ease-in-out' }}>
         <Opening isOpen={isOpen} />
         <Couple />
-        <Events />
+        <Events invitationType={invitationType} />
         <Gallery />
         <DigitalEnvelope />
         <Wishes />

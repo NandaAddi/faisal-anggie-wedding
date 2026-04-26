@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const BankCard = ({ logoUrl, accountName, accountNumber, bankName }) => {
   const [copied, setCopied] = useState(false);
@@ -11,15 +11,15 @@ const BankCard = ({ logoUrl, accountName, accountNumber, bankName }) => {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true, amount: 0.4 }}
       transition={{ duration: 0.5 }}
       style={{
-        backgroundColor: '#CDB17F', 
+        backgroundColor: '#CDB17F',
         padding: '0.8rem',
-        borderRadius: '2px', 
+        borderRadius: '2px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -32,7 +32,7 @@ const BankCard = ({ logoUrl, accountName, accountNumber, bankName }) => {
       }}
     >
       <img src={logoUrl} alt={bankName} style={{ height: '24px', marginBottom: '0.5rem', objectFit: 'contain' }} />
-      
+
       <div style={{
         backgroundColor: '#FDF9F1',
         padding: '0.3rem 0.8rem',
@@ -46,20 +46,20 @@ const BankCard = ({ logoUrl, accountName, accountNumber, bankName }) => {
           {accountNumber}
         </span>
       </div>
-      
-      <p style={{ 
-        color: '#2A1B16', 
-        fontFamily: 'var(--font-body)', 
-        fontWeight: 'bold', 
-        fontSize: '0.75rem', 
-        marginBottom: '0.6rem', 
-        textAlign: 'center', 
-        textTransform: 'capitalize' 
+
+      <p style={{
+        color: '#2A1B16',
+        fontFamily: 'var(--font-body)',
+        fontWeight: 'bold',
+        fontSize: '0.75rem',
+        marginBottom: '0.6rem',
+        textAlign: 'center',
+        textTransform: 'capitalize'
       }}>
         {accountName}
       </p>
-      
-      <button 
+
+      <button
         onClick={handleCopy}
         style={{
           backgroundColor: '#2A1B16',
@@ -104,11 +104,18 @@ const BankCard = ({ logoUrl, accountName, accountNumber, bankName }) => {
 };
 
 const DigitalEnvelope = () => {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const locations = {
+    pria: "https://maps.app.goo.gl/groom-location-placeholder",
+    wanita: "https://maps.app.goo.gl/bride-location-placeholder"
+  };
+
   return (
-    <section style={{ 
-      position: 'relative', 
+    <section style={{
+      position: 'relative',
       minHeight: '100vh',
-      display: 'flex', 
+      display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       overflow: 'hidden'
@@ -168,20 +175,22 @@ const DigitalEnvelope = () => {
         }} />
       </motion.div>
 
-      {/* Kirim Kado Layer */}
+      {/* Kirim Kado Layer (Interactive) */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
         transition={{ duration: 0.8, delay: 0.2 }}
+        onClick={() => setShowPopup(true)}
         style={{
           position: 'absolute',
           top: 0,
           left: 0,
           width: '100%',
           height: '100%',
-          zIndex: 11,
-          pointerEvents: 'none'
+          zIndex: 15, // Raised z-index
+          pointerEvents: 'auto', // Enabled pointer events
+          cursor: 'pointer'
         }}
       >
         <div style={{
@@ -207,19 +216,126 @@ const DigitalEnvelope = () => {
         justifyContent: 'center',
         padding: '0'
       }}>
-        <BankCard 
+        <BankCard
           logoUrl="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg"
           bankName="BCA"
           accountNumber="8040187392"
           accountName="Anggie Nadyasyifa"
         />
-        <BankCard 
+        <BankCard
           logoUrl="https://upload.wikimedia.org/wikipedia/commons/a/a0/Bank_Syariah_Indonesia.svg"
           bankName="BSI"
           accountNumber="7191713887"
           accountName="Muhammad Faizal Riski"
         />
       </div>
+
+      {/* Location Popup Overlay */}
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowPopup(false)}
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0,0,0,0.8)',
+              zIndex: 100,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              backdropFilter: 'blur(5px)',
+              padding: '20px'
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                backgroundColor: '#2A1B16',
+                border: '2px solid #E4C88E',
+                borderRadius: '12px',
+                padding: '2rem',
+                width: '100%',
+                maxWidth: '320px',
+                textAlign: 'center',
+                boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
+              }}
+            >
+              <h3 style={{
+                color: '#E4C88E',
+                fontFamily: 'var(--font-body)',
+                fontSize: '1.4rem',
+                marginBottom: '1.5rem'
+              }}>
+                Lokasi Pengiriman Kado
+              </h3>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <a
+                  href={locations.wanita}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    backgroundColor: '#E4C88E',
+                    color: '#2A1B16',
+                    padding: '12px',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                    fontSize: '0.9rem',
+                    fontFamily: 'var(--font-body)',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Rumah Mempelai Wanita
+                </a>
+                <a
+                  href={locations.pria}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    backgroundColor: 'transparent',
+                    color: '#E4C88E',
+                    border: '1px solid #E4C88E',
+                    padding: '12px',
+                    borderRadius: '8px',
+                    textDecoration: 'none',
+                    fontWeight: 'bold',
+                    fontSize: '0.9rem',
+                    fontFamily: 'var(--font-body)',
+                    transition: 'all 0.3s ease'
+                  }}
+                >
+                  Rumah Mempelai Pria
+                </a>
+              </div>
+
+              <button
+                onClick={() => setShowPopup(false)}
+                style={{
+                  marginTop: '1.5rem',
+                  backgroundColor: 'transparent',
+                  color: 'rgba(228, 200, 142, 0.6)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '0.8rem',
+                  textDecoration: 'underline'
+                }}
+              >
+                Tutup
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </section>
   );
