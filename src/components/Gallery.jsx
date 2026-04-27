@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useAnimation, useInView } from 'framer-motion';
 
 const images = [
   '/images/IMG_9625.avif',
   '/images/IMG_9446.avif',
   '/images/IMG_9610.avif',
+  '/images/IMG_9446.avif', // Menambah agar lebih panjang
   '/images/IMG_9469.avif',
   '/images/IMG_9582.avif',
   '/images/IMG_9494.avif'
@@ -12,6 +13,25 @@ const images = [
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const controls = useAnimation();
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { amount: 0.1 });
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start({
+        x: [0, -((images.length - 1) * 280), 0],
+        transition: {
+          duration: images.length * 5,
+          ease: "linear",
+          repeat: Infinity,
+          repeatType: "mirror"
+        }
+      });
+    } else {
+      controls.stop();
+    }
+  }, [isInView, controls]);
 
   return (
     <>
@@ -22,14 +42,13 @@ const Gallery = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         overflow: 'hidden',
-        backgroundColor: '#000' // Base color while loading
+        backgroundColor: '#000'
       }}>
-        {/* Background Image - Optimized with <img> tag */}
+        {/* Background Image */}
         <img
           src="/images/background2.avif"
           alt=""
           loading="lazy"
-          decoding="async"
           style={{
             position: 'absolute',
             inset: 0,
@@ -41,12 +60,11 @@ const Gallery = () => {
           }}
         />
 
-        {/* Border Image - Optimized with <img> tag */}
+        {/* Border Image */}
         <img
           src="/images/border.avif"
           alt=""
           loading="lazy"
-          decoding="async"
           style={{
             position: 'absolute',
             inset: 0,
@@ -62,11 +80,10 @@ const Gallery = () => {
         <motion.img
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.1, margin: "100px" }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 1 }}
           src="/images/our-gallery.avif"
           alt="Our Gallery"
-          decoding="async"
           style={{
             position: 'absolute',
             inset: 0,
@@ -74,8 +91,7 @@ const Gallery = () => {
             height: '100%',
             objectFit: 'contain',
             zIndex: 10,
-            pointerEvents: 'none',
-            willChange: 'opacity'
+            pointerEvents: 'none'
           }}
         />
 
@@ -83,11 +99,10 @@ const Gallery = () => {
         <motion.img
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          viewport={{ once: true, amount: 0.1, margin: "100px" }}
+          viewport={{ once: true, amount: 0.1 }}
           transition={{ duration: 1, delay: 0.2 }}
           src="/images/doa-pengantin.avif"
           alt="Doa Pengantin"
-          decoding="async"
           style={{
             position: 'absolute',
             inset: 0,
@@ -95,51 +110,78 @@ const Gallery = () => {
             height: '100%',
             objectFit: 'contain',
             zIndex: 11,
-            pointerEvents: 'none',
-            willChange: 'opacity'
+            pointerEvents: 'none'
           }}
         />
 
-        {/* Image Grid */}
-        <div style={{
-          position: 'relative',
-          zIndex: 6,
-          width: '100%',
-          padding: '0 12%',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '0.8rem'
-        }}>
-          {images.map((img, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1, margin: "100px" }}
-              transition={{ duration: 0.6, delay: index * 0.05 }}
-              onClick={() => setSelectedImage(img)}
-              style={{
-                aspectRatio: '3/4',
-                overflow: 'hidden',
-                backgroundColor: '#1a1a1a',
-                cursor: 'pointer',
-                borderRadius: '4px',
-                willChange: 'transform, opacity'
-              }}
-            >
-              <img
-                src={img}
-                alt={`Gallery ${index}`}
-                loading="lazy"
-                decoding="async"
+        {/* Image Slider Container */}
+        <div
+          ref={containerRef}
+          style={{
+            position: 'relative',
+            zIndex: 4, // Behind the border (5)
+            width: '100%',
+            marginTop: '5vh',
+            overflow: 'hidden'
+          }}
+        >
+          <motion.div
+            drag="x"
+            dragConstraints={{ right: 0, left: -((images.length - 1) * 280) }}
+            animate={controls}
+            onDragStart={() => controls.stop()} // Stop auto-slide on drag
+            style={{
+              display: 'flex',
+              gap: '1rem',
+              padding: '0 10%',
+              cursor: 'grab'
+            }}
+            whileTap={{ cursor: 'grabbing' }}
+          >
+            {images.map((img, index) => (
+              <motion.div
+                key={index}
+                onClick={() => setSelectedImage(img)}
                 style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover'
+                  minWidth: '260px',
+                  width: '260px',
+                  aspectRatio: '3/4',
+                  overflow: 'hidden',
+                  backgroundColor: '#1a1a1a',
+                  cursor: 'pointer',
+                  borderRadius: '12px',
+                  boxShadow: '0 15px 35px rgba(0,0,0,0.6)',
+                  flexShrink: 0,
+                  border: '1px solid rgba(228, 200, 142, 0.3)'
                 }}
-              />
-            </motion.div>
-          ))}
+              >
+                <img
+                  src={img}
+                  alt={`Gallery ${index}`}
+                  loading="lazy"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                />
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Scroll Hint */}
+          <div style={{
+            width: '100%',
+            textAlign: 'center',
+            marginTop: '1.5rem',
+            color: '#E4C88E',
+            fontSize: '0.7rem',
+            fontFamily: 'var(--font-body)',
+            letterSpacing: '2px',
+            textTransform: 'uppercase',
+            opacity: 0.8
+          }}>
+          </div>
         </div>
       </section>
 
@@ -150,7 +192,6 @@ const Gallery = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
             onClick={() => setSelectedImage(null)}
             style={{
               position: 'fixed',
@@ -162,28 +203,24 @@ const Gallery = () => {
               alignItems: 'center',
               padding: '1rem',
               cursor: 'zoom-out',
-              backdropFilter: 'blur(5px)' // Subtle blur for premium feel, but test if it lags
+              backdropFilter: 'blur(5px)'
             }}
           >
             <motion.img
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ duration: 0.3 }}
               src={selectedImage}
               alt="Full size"
-              decoding="async"
               onClick={(e) => e.stopPropagation()}
               style={{
                 maxWidth: '100%',
                 maxHeight: '90vh',
                 objectFit: 'contain',
                 borderRadius: '4px',
-                boxShadow: '0 20px 40px rgba(0,0,0,0.8)',
-                cursor: 'default'
+                boxShadow: '0 20px 40px rgba(0,0,0,0.8)'
               }}
             />
-
             <button
               onClick={() => setSelectedImage(null)}
               style={{
@@ -198,7 +235,6 @@ const Gallery = () => {
                 height: '44px',
                 fontSize: '2rem',
                 cursor: 'pointer',
-                zIndex: 10000,
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
