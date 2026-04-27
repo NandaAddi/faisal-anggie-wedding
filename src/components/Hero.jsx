@@ -30,7 +30,7 @@ const Hero = ({ onOpen, guestName }) => {
         width: '100%',
         height: '100%',
         backgroundImage: 'url("/images/border.avif")',
-        backgroundSize: '100% 100%',
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         pointerEvents: 'none',
@@ -59,6 +59,7 @@ const Hero = ({ onOpen, guestName }) => {
           }}
         >
           <div style={{ width: '100%', maxWidth: '100%', padding: 0 }}>
+            <h1 className="sr-only">Pernikahan Anggie & Faizal</h1>
             <img src="/images/font-1.avif" alt="Anggie & Faizal" style={{ width: '100%', height: 'auto', transform: 'scale(1.15)' }} />
           </div>
         </motion.div>

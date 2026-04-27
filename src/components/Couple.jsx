@@ -33,7 +33,7 @@ const Couple = () => {
         width: '100%',
         height: '100%',
         backgroundImage: 'url("/images/border.avif")',
-        backgroundSize: '100% 100%',
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         pointerEvents: 'none',
@@ -63,7 +63,9 @@ const Couple = () => {
           backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
-        }} />
+        }}>
+          <h2 className="sr-only">Mempelai Pria & Wanita</h2>
+        </div>
       </motion.div>
 
       {/* Bride Layer */}

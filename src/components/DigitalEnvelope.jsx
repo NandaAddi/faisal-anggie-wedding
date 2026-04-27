@@ -91,7 +91,7 @@ const BankCard = ({ logoUrl, accountName, accountNumber, bankName }) => {
           </>
         ) : (
           <>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" role="img" aria-label="Salin">
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
             </svg>
@@ -107,8 +107,8 @@ const DigitalEnvelope = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   const locations = {
-    pria: "https://maps.app.goo.gl/groom-location-placeholder",
-    wanita: "https://maps.app.goo.gl/bride-location-placeholder"
+    pria: "https://maps.app.goo.gl/fmGoeTmUgq1kojvv7",
+    wanita: "https://maps.app.goo.gl/8jR9zGpQnpiVZQMi6?g_st=ic"
   };
 
   return (
@@ -141,7 +141,7 @@ const DigitalEnvelope = () => {
         width: '100%',
         height: '100%',
         backgroundImage: 'url("/images/border.avif")',
-        backgroundSize: '100% 100%',
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         pointerEvents: 'none',
@@ -172,7 +172,9 @@ const DigitalEnvelope = () => {
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           transform: 'translateY(-25px)'
-        }} />
+        }}>
+          <h2 className="sr-only">Amplop Digital & Kado Pernikahan</h2>
+        </div>
       </motion.div>
 
       {/* Kirim Kado Layer (Interactive) */}

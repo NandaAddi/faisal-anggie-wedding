@@ -52,7 +52,7 @@ const Gallery = () => {
             inset: 0,
             width: '100%',
             height: '100%',
-            objectFit: 'fill',
+            objectFit: 'cover',
             zIndex: 5,
             pointerEvents: 'none'
           }}
