@@ -121,32 +121,37 @@ const DigitalEnvelope = () => {
       overflow: 'hidden'
     }}>
       {/* Background Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundImage: 'url("/images/background2.avif")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        zIndex: 1
-      }} />
+      <img
+        src="/images/background2.avif"
+        alt=""
+        decoding="async"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}
+      />
 
       {/* Border Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundImage: 'url("/images/border.avif")',
-        backgroundSize: '100% 100%',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        pointerEvents: 'none',
-        zIndex: 5
-      }} />
+      <img
+        src="/images/border.avif"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'fill',
+          zIndex: 5,
+          pointerEvents: 'none'
+        }}
+      />
 
       {/* Amplop Digital Title Layer */}
       <motion.div
@@ -156,25 +161,24 @@ const DigitalEnvelope = () => {
         transition={{ duration: 0.8 }}
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
+          inset: 0,
           zIndex: 10,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          willChange: 'transform, opacity'
         }}
       >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'url("/images/amplop-digital.avif")',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          transform: 'translateY(-25px)'
-        }}>
-          <h2 className="sr-only">Amplop Digital & Kado Pernikahan</h2>
-        </div>
+        <img
+          src="/images/amplop-digital.avif"
+          alt="Amplop Digital & Kado Pernikahan"
+          decoding="async"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+            transform: 'translateY(-25px)'
+          }}
+        />
+        <h2 className="sr-only">Amplop Digital & Kado Pernikahan</h2>
       </motion.div>
 
       {/* Kirim Kado Layer (Interactive) */}
@@ -186,24 +190,24 @@ const DigitalEnvelope = () => {
         onClick={() => setShowPopup(true)}
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 15, // Raised z-index
-          pointerEvents: 'auto', // Enabled pointer events
-          cursor: 'pointer'
+          inset: 0,
+          zIndex: 15,
+          pointerEvents: 'auto',
+          cursor: 'pointer',
+          willChange: 'transform, opacity'
         }}
       >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'url("/images/kirim-kado.avif")',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          transform: 'translateY(25px)'
-        }} />
+        <img
+          src="/images/kirim-kado.webp"
+          alt="Kirim Kado"
+          decoding="async"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+            transform: 'translateY(25px)'
+          }}
+        />
       </motion.div>
 
       {/* Interactive Bank Cards Layer */}
@@ -343,4 +347,4 @@ const DigitalEnvelope = () => {
   );
 };
 
-export default DigitalEnvelope;
+export default React.memo(DigitalEnvelope);

@@ -41,7 +41,8 @@ const DustParticles = ({ isInView }) => {
           borderRadius: '50%',
           boxShadow: '0 0 8px #C09A5B',
           zIndex: 4,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          willChange: 'transform, opacity'
         }}
       />
     );
@@ -67,7 +68,8 @@ const SmokeClouds = ({ isInView }) => {
           background: 'radial-gradient(ellipse at center, rgba(192, 154, 91, 0.15) 0%, rgba(255,255,255,0) 60%)',
           filter: 'blur(15px)',
           zIndex: 4,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          willChange: 'transform, opacity'
         }}
       />
       <motion.div
@@ -84,7 +86,8 @@ const SmokeClouds = ({ isInView }) => {
           background: 'radial-gradient(circle, rgba(228, 200, 142, 0.1) 0%, rgba(255,255,255,0) 60%)',
           filter: 'blur(20px)',
           zIndex: 4,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          willChange: 'transform, opacity'
         }}
       />
     </>
@@ -105,82 +108,87 @@ const Closing = () => {
       overflow: 'hidden'
     }}>
       {/* Background Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundImage: 'url("/images/background2.avif")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        zIndex: 1
-      }} />
+      <img
+        src="/images/background2.avif"
+        alt=""
+        decoding="async"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}
+      />
 
       {/* Border Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundImage: 'url("/images/border.avif")',
-        backgroundSize: '100% 100%',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        pointerEvents: 'none',
-        zIndex: 15
-      }} />
+      <img
+        src="/images/border.avif"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'fill',
+          zIndex: 15,
+          pointerEvents: 'none'
+        }}
+      />
 
       {/* Left Gate */}
       <motion.div
         initial={{ x: '-100%' }}
         animate={isInView ? { x: 5 } : { x: '-100%' }}
-        transition={{ duration: 2.5, ease: 'easeInOut', delay: 5 }} // 5s delay as requested
+        transition={{ duration: 2.5, ease: 'easeInOut', delay: 5 }}
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 11, // Raised above text (10)
-          pointerEvents: 'none'
+          inset: 0,
+          zIndex: 11,
+          pointerEvents: 'none',
+          willChange: 'transform'
         }}
       >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'url("/images/gerbang.avif")',
-          backgroundSize: '100% 100%',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }} />
+        <img 
+          src="/images/gerbang.avif" 
+          alt="" 
+          decoding="async"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'fill'
+          }}
+        />
       </motion.div>
 
       {/* Right Gate */}
       <motion.div
         initial={{ x: '100%' }}
         animate={isInView ? { x: -5 } : { x: '100%' }}
-        transition={{ duration: 2.5, ease: 'easeInOut', delay: 5 }} // 5s delay as requested
+        transition={{ duration: 2.5, ease: 'easeInOut', delay: 5 }}
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 11, // Raised above text (10)
-          pointerEvents: 'none'
+          inset: 0,
+          zIndex: 11,
+          pointerEvents: 'none',
+          willChange: 'transform'
         }}
       >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'url("/images/gerbang.avif")',
-          backgroundSize: '100% 100%',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          transform: 'scaleX(-1)'
-        }} />
+        <img 
+          src="/images/gerbang.avif" 
+          alt="" 
+          decoding="async"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'fill',
+            transform: 'scaleX(-1)'
+          }}
+        />
       </motion.div>
 
       {/* Particle & Smoke Effects */}
@@ -191,30 +199,29 @@ const Closing = () => {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-        transition={{ duration: 0.8, delay: 0.5 }} // Shows up quickly
+        transition={{ duration: 0.8, delay: 0.5 }}
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
+          inset: 0,
           zIndex: 10,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          willChange: 'transform, opacity'
         }}
       >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'url("/images/penutup.avif")',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}>
-          <h2 className="sr-only">Ucapan Terima Kasih & Penutup</h2>
-        </div>
+        <img 
+          src="/images/penutup.avif" 
+          alt="Ucapan Terima Kasih & Penutup" 
+          decoding="async"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain'
+          }}
+        />
+        <h2 className="sr-only">Ucapan Terima Kasih & Penutup</h2>
       </motion.div>
     </section>
   );
 };
 
-export default Closing;
+export default React.memo(Closing);

@@ -23,7 +23,7 @@ function App() {
     const params = new URLSearchParams(window.location.search);
     const to = params.get('to');
     const type = params.get('type');
-    
+
     if (to) setGuestName(to);
     if (type === 'pria' || type === 'wanita') setInvitationType(type);
   }, []);
@@ -48,7 +48,7 @@ function App() {
       timer = setTimeout(() => {
         document.body.style.overflowY = 'auto';
       }, 3500);
-      
+
       window.scrollTo(0, 0);
       if (audioRef.current) {
         audioRef.current.play().catch(err => console.log("Audio play blocked:", err));
@@ -110,13 +110,17 @@ function App() {
 
       <main style={{ opacity: isOpen ? 1 : 0, transition: 'opacity 1s ease-in-out' }}>
         <Opening isOpen={isOpen} />
-        <Couple />
-        <Events invitationType={invitationType} />
-        <Gallery />
-        <DigitalEnvelope />
-        <Wishes />
-        <WishesList />
-        <Closing />
+        {isOpen && (
+          <>
+            <Couple />
+            <Events invitationType={invitationType} />
+            <Gallery />
+            <DigitalEnvelope />
+            <Wishes />
+            <WishesList />
+            <Closing />
+          </>
+        )}
       </main>
 
       {/* Floating Audio Button */}
@@ -143,7 +147,7 @@ function App() {
         </button>
       )}
       {/* Audio Element */}
-      <audio ref={audioRef} src="/backsound.mp3" loop />
+      <audio ref={audioRef} src="/backsound1.mp3" loop />
     </div>
   );
 }

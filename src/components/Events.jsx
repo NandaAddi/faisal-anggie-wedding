@@ -17,32 +17,37 @@ const Events = ({ invitationType }) => {
       overflow: 'hidden'
     }}>
       {/* Background Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundImage: 'url("/images/background2.avif")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        zIndex: 1
-      }} />
+      <img
+        src="/images/background2.avif"
+        alt=""
+        decoding="async"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}
+      />
 
       {/* Border Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundImage: 'url("/images/border.avif")',
-        backgroundSize: '100% 100%',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        pointerEvents: 'none',
-        zIndex: 5
-      }} />
+      <img
+        src="/images/border.avif"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'fill',
+          zIndex: 5,
+          pointerEvents: 'none'
+        }}
+      />
 
       {/* Wedding Day Title Layer */}
       <motion.div
@@ -57,19 +62,21 @@ const Events = ({ invitationType }) => {
           width: '100%',
           height: '100%',
           zIndex: 10,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          willChange: 'transform, opacity'
         }}
       >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'url("/images/wedding-day.avif")',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}>
-          <h2 className="sr-only">Waktu dan Lokasi Acara</h2>
-        </div>
+        <img 
+          src="/images/wedding-day.avif" 
+          alt="Waktu dan Lokasi Acara"
+          decoding="async"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain'
+          }}
+        />
+        <h2 className="sr-only">Waktu dan Lokasi Acara</h2>
       </motion.div>
 
       {/* Event Details Layer(s) */}
@@ -86,7 +93,8 @@ const Events = ({ invitationType }) => {
             width: '100%',
             height: '100%',
             zIndex: 11,
-            pointerEvents: 'auto'
+            pointerEvents: 'auto',
+            willChange: 'transform, opacity'
           }}
         >
           <motion.a
@@ -120,7 +128,8 @@ const Events = ({ invitationType }) => {
               width: '100%',
               height: '100%',
               zIndex: 11,
-              pointerEvents: 'auto'
+              pointerEvents: 'auto',
+              willChange: 'transform, opacity'
             }}
           >
             <motion.a
@@ -153,7 +162,8 @@ const Events = ({ invitationType }) => {
               width: '100%',
               height: '100%',
               zIndex: 12,
-              pointerEvents: 'auto'
+              pointerEvents: 'auto',
+              willChange: 'transform, opacity'
             }}
           >
             <motion.a
@@ -179,4 +189,4 @@ const Events = ({ invitationType }) => {
   );
 };
 
-export default Events;
+export default React.memo(Events);

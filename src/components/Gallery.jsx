@@ -2,13 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useAnimation, useInView } from 'framer-motion';
 
 const images = [
-  '/images/IMG_9625.avif',
-  '/images/IMG_9446.avif',
-  '/images/IMG_9610.avif',
-  '/images/IMG_9446.avif', // Menambah agar lebih panjang
-  '/images/IMG_9469.avif',
-  '/images/IMG_9582.avif',
-  '/images/IMG_9494.avif'
+  '/images/1.webp',
+  '/images/1b.webp',
+  '/images/2.webp',
+  '/images/2b.webp', // Menambah agar lebih panjang
+  '/images/3.webp',
+  '/images/3b.webp'
 ];
 
 const Gallery = () => {
@@ -20,12 +19,11 @@ const Gallery = () => {
   useEffect(() => {
     if (isInView) {
       controls.start({
-        x: [0, -((images.length - 1) * 280), 0],
+        x: [0, -((images.length) * 280)],
         transition: {
           duration: images.length * 5,
           ease: "linear",
-          repeat: Infinity,
-          repeatType: "mirror"
+          repeat: Infinity
         }
       });
     } else {
@@ -65,6 +63,7 @@ const Gallery = () => {
           src="/images/border.avif"
           alt=""
           loading="lazy"
+          decoding="async"
           style={{
             position: 'absolute',
             inset: 0,
@@ -84,6 +83,7 @@ const Gallery = () => {
           transition={{ duration: 1 }}
           src="/images/our-gallery.avif"
           alt="Our Gallery"
+          decoding="async"
           style={{
             position: 'absolute',
             inset: 0,
@@ -91,7 +91,8 @@ const Gallery = () => {
             height: '100%',
             objectFit: 'contain',
             zIndex: 10,
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            willChange: 'opacity'
           }}
         />
 
@@ -103,6 +104,7 @@ const Gallery = () => {
           transition={{ duration: 1, delay: 0.2 }}
           src="/images/doa-pengantin.avif"
           alt="Doa Pengantin"
+          decoding="async"
           style={{
             position: 'absolute',
             inset: 0,
@@ -110,7 +112,8 @@ const Gallery = () => {
             height: '100%',
             objectFit: 'contain',
             zIndex: 11,
-            pointerEvents: 'none'
+            pointerEvents: 'none',
+            willChange: 'opacity'
           }}
         />
 
@@ -125,20 +128,18 @@ const Gallery = () => {
             overflow: 'hidden'
           }}
         >
-          <motion.div
-            drag="x"
-            dragConstraints={{ right: 0, left: -((images.length - 1) * 280) }}
+          <motion.div 
             animate={controls}
-            onDragStart={() => controls.stop()} // Stop auto-slide on drag
+            onDragStart={() => controls.stop()}
             style={{
               display: 'flex',
               gap: '1rem',
               padding: '0 10%',
-              cursor: 'grab'
+              willChange: 'transform'
             }}
-            whileTap={{ cursor: 'grabbing' }}
           >
-            {images.map((img, index) => (
+            {/* Render images twice for seamless loop */}
+            {[...images, ...images].map((img, index) => (
               <motion.div
                 key={index}
                 onClick={() => setSelectedImage(img)}
@@ -152,13 +153,15 @@ const Gallery = () => {
                   borderRadius: '12px',
                   boxShadow: '0 15px 35px rgba(0,0,0,0.6)',
                   flexShrink: 0,
-                  border: '1px solid rgba(228, 200, 142, 0.3)'
+                  border: '1px solid rgba(228, 200, 142, 0.3)',
+                  willChange: 'transform, opacity'
                 }}
               >
                 <img
                   src={img}
                   alt={`Gallery ${index}`}
                   loading="lazy"
+                  decoding="async"
                   style={{
                     width: '100%',
                     height: '100%',
@@ -250,6 +253,6 @@ const Gallery = () => {
   );
 };
 
-export default Gallery;
+export default React.memo(Gallery);
 
 

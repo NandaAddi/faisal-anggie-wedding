@@ -106,82 +106,87 @@ const Opening = ({ isOpen }) => {
       overflow: 'hidden'
     }}>
       {/* Background Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundImage: 'url("/images/background2.avif")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        zIndex: 1
-      }} />
+      <img
+        src="/images/background2.avif"
+        alt=""
+        decoding="async"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}
+      />
 
       {/* Border Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundImage: 'url("/images/border.avif")',
-        backgroundSize: '100% 100%',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        pointerEvents: 'none',
-        zIndex: 5
-      }} />
+      <img
+        src="/images/border.avif"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'fill',
+          zIndex: 5,
+          pointerEvents: 'none'
+        }}
+      />
 
       {/* Left Gate */}
       <motion.div
-        initial={{ x: 5 }} // Overlap lebih besar ke kanan
+        initial={{ x: 5 }}
         animate={{ x: isOpen ? '-100%' : 5 }}
         transition={{ duration: 2.5, ease: 'easeInOut', delay: 1 }}
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
+          inset: 0,
           zIndex: 3,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          willChange: 'transform'
         }}
       >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'url("/images/gerbang.avif")',
-          backgroundSize: '100% 100%',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }} />
+        <img 
+          src="/images/gerbang.avif" 
+          alt="" 
+          decoding="async"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'fill'
+          }}
+        />
       </motion.div>
 
       {/* Right Gate */}
       <motion.div
-        initial={{ x: -5 }} // Overlap lebih besar ke kiri
+        initial={{ x: -5 }}
         animate={{ x: isOpen ? '100%' : -5 }}
         transition={{ duration: 2.5, ease: 'easeInOut', delay: 1 }}
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
+          inset: 0,
           zIndex: 3,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          willChange: 'transform'
         }}
       >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'url("/images/gerbang.avif")',
-          backgroundSize: '100% 100%',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          transform: 'scaleX(-1)'
-        }} />
+        <img 
+          src="/images/gerbang.avif" 
+          alt="" 
+          decoding="async"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'fill',
+            transform: 'scaleX(-1)'
+          }}
+        />
       </motion.div>
 
       {/* Particle & Smoke Effects */}
@@ -212,4 +217,4 @@ const Opening = ({ isOpen }) => {
   );
 };
 
-export default Opening;
+export default React.memo(Opening);

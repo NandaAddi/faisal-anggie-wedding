@@ -13,32 +13,37 @@ const Couple = () => {
       padding: '4rem 0'
     }}>
       {/* Background Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundImage: 'url("/images/background2.avif")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        zIndex: 1
-      }} />
+      <img
+        src="/images/background2.avif"
+        alt=""
+        decoding="async"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          zIndex: 1,
+          pointerEvents: 'none'
+        }}
+      />
 
       {/* Border Image */}
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundImage: 'url("/images/border.avif")',
-        backgroundSize: '100% 100%',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        pointerEvents: 'none',
-        zIndex: 5
-      }} />
+      <img
+        src="/images/border.avif"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'fill',
+          zIndex: 5,
+          pointerEvents: 'none'
+        }}
+      />
 
       {/* Title Layer */}
       <motion.div
@@ -48,24 +53,23 @@ const Couple = () => {
         transition={{ duration: 0.8 }}
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
+          inset: 0,
           zIndex: 10,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          willChange: 'transform, opacity'
         }}
       >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'url("/images/font-3.avif")',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}>
-          <h2 className="sr-only">Mempelai Pria & Wanita</h2>
-        </div>
+        <img 
+          src="/images/font-3.avif" 
+          alt="Mempelai Pria & Wanita" 
+          decoding="async"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain'
+          }}
+        />
+        <h2 className="sr-only">Mempelai Pria & Wanita</h2>
       </motion.div>
 
       {/* Bride Layer */}
@@ -76,22 +80,22 @@ const Couple = () => {
         transition={{ duration: 0.8, delay: 0.2 }}
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
+          inset: 0,
           zIndex: 11,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          willChange: 'transform, opacity'
         }}
       >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'url("/images/anggi.avif")',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }} />
+        <img 
+          src="/images/anggi.avif" 
+          alt="" 
+          decoding="async"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain'
+          }}
+        />
       </motion.div>
 
       {/* Groom Layer */}
@@ -102,26 +106,26 @@ const Couple = () => {
         transition={{ duration: 0.8, delay: 0.4 }}
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
+          inset: 0,
           zIndex: 12,
-          pointerEvents: 'none'
+          pointerEvents: 'none',
+          willChange: 'transform, opacity'
         }}
       >
-        <div style={{
-          width: '100%',
-          height: '100%',
-          backgroundImage: 'url("/images/faisal.avif")',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }} />
+        <img 
+          src="/images/faisal.avif" 
+          alt="" 
+          decoding="async"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain'
+          }}
+        />
       </motion.div>
 
     </section>
   );
 };
 
-export default Couple;
+export default React.memo(Couple);
