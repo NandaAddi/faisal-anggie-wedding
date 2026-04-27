@@ -117,6 +117,27 @@ const AdminPanel = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    if (!window.confirm('Apakah Anda yakin ingin menghapus ucapan ini? Tindakan ini tidak dapat dibatalkan.')) return;
+
+    try {
+      const { error } = await supabase
+        .from('wishes')
+        .delete()
+        .eq('id', id);
+
+      if (error) {
+        alert('Gagal menghapus ucapan.');
+        console.error(error);
+      } else {
+        alert('Ucapan berhasil dihapus!');
+        fetchWishes(); // Refresh data
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // Calculate Stats
   const statHadir = wishes.filter(w => w.attendance === 'Hadir').length;
   const statTidakHadir = wishes.filter(w => w.attendance === 'Tidak Hadir').length;
@@ -365,6 +386,23 @@ const AdminPanel = () => {
             .btn-group { flex-direction: column; }
             .btn-group > button { width: 100%; }
           }
+          
+          .btn-delete {
+            background: transparent;
+            color: #9CA3AF;
+            border: none;
+            padding: 4px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .btn-delete:hover {
+            color: #EF4444;
+            background-color: #FEF2F2;
+          }
         `}
       </style>
       
@@ -489,9 +527,23 @@ const AdminPanel = () => {
                             <strong style={{ fontSize: '1rem', color: '#111827', display: 'block' }}>{wish.name}</strong>
                             <span style={{ fontSize: '0.75rem', color: '#9CA3AF' }}>{wish.created_at ? new Date(wish.created_at).toLocaleDateString('id-ID', {day: 'numeric', month: 'short', year: 'numeric'}) : ''}</span>
                           </div>
-                          <span className={`badge ${wish.attendance === 'Hadir' ? 'badge-hadir' : wish.attendance === 'Tidak Hadir' ? 'badge-tidak' : 'badge-ragu'}`}>
-                            {wish.attendance} {wish.attendance === 'Hadir' && `(${wish.guest_count || 0})`}
-                          </span>
+                          <div style={{ display: 'flex', gap: '0.8rem', alignItems: 'flex-start' }}>
+                            <span className={`badge ${wish.attendance === 'Hadir' ? 'badge-hadir' : wish.attendance === 'Tidak Hadir' ? 'badge-tidak' : 'badge-ragu'}`}>
+                              {wish.attendance} {wish.attendance === 'Hadir' && `(${wish.guest_count || 0})`}
+                            </span>
+                            <button 
+                              onClick={() => handleDelete(wish.id)}
+                              className="btn-delete"
+                              title="Hapus Ucapan"
+                            >
+                              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                <line x1="10" y1="11" x2="10" y2="17"></line>
+                                <line x1="14" y1="11" x2="14" y2="17"></line>
+                              </svg>
+                            </button>
+                          </div>
                         </div>
                         
                         <p style={{ margin: '0 0 1rem 0', color: '#4B5563', fontSize: '0.9rem', lineHeight: '1.5' }}>"{wish.message}"</p>
