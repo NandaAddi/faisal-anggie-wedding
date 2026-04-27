@@ -140,19 +140,22 @@ const Opening = ({ isOpen }) => {
 
       {/* Left Gate */}
       <motion.div
-        initial={{ x: 5 }}
-        animate={{ x: isOpen ? '-100%' : 5 }}
+        initial={{ x: 0 }}
+        animate={{ x: isOpen ? '-100%' : 0 }}
         transition={{ duration: 2.5, ease: 'easeInOut', delay: 1 }}
         style={{
           position: 'absolute',
-          inset: 0,
+          top: 0,
+          left: 0,
+          width: '50%',
+          height: '100%',
           zIndex: 3,
           pointerEvents: 'none',
           willChange: 'transform'
         }}
       >
         <img 
-          src="/images/gerbang.avif" 
+          src="/images/kiri.webp" 
           alt="" 
           decoding="async"
           style={{
@@ -165,26 +168,28 @@ const Opening = ({ isOpen }) => {
 
       {/* Right Gate */}
       <motion.div
-        initial={{ x: -5 }}
-        animate={{ x: isOpen ? '100%' : -5 }}
+        initial={{ x: 0 }}
+        animate={{ x: isOpen ? '100%' : 0 }}
         transition={{ duration: 2.5, ease: 'easeInOut', delay: 1 }}
         style={{
           position: 'absolute',
-          inset: 0,
+          top: 0,
+          right: 0,
+          width: '50%',
+          height: '100%',
           zIndex: 3,
           pointerEvents: 'none',
           willChange: 'transform'
         }}
       >
         <img 
-          src="/images/gerbang.avif" 
+          src="/images/kanan.webp" 
           alt="" 
           decoding="async"
           style={{
             width: '100%',
             height: '100%',
-            objectFit: 'fill',
-            transform: 'scaleX(-1)'
+            objectFit: 'fill'
           }}
         />
       </motion.div>

@@ -143,18 +143,21 @@ const Closing = () => {
       {/* Left Gate */}
       <motion.div
         initial={{ x: '-100%' }}
-        animate={isInView ? { x: 5 } : { x: '-100%' }}
+        animate={isInView ? { x: 0 } : { x: '-100%' }}
         transition={{ duration: 2.5, ease: 'easeInOut', delay: 5 }}
         style={{
           position: 'absolute',
-          inset: 0,
+          top: 0,
+          left: 0,
+          width: '50%',
+          height: '100%',
           zIndex: 11,
           pointerEvents: 'none',
           willChange: 'transform'
         }}
       >
         <img 
-          src="/images/gerbang.avif" 
+          src="/images/kiri.webp" 
           alt="" 
           decoding="async"
           style={{
@@ -168,25 +171,27 @@ const Closing = () => {
       {/* Right Gate */}
       <motion.div
         initial={{ x: '100%' }}
-        animate={isInView ? { x: -5 } : { x: '100%' }}
+        animate={isInView ? { x: 0 } : { x: '100%' }}
         transition={{ duration: 2.5, ease: 'easeInOut', delay: 5 }}
         style={{
           position: 'absolute',
-          inset: 0,
+          top: 0,
+          right: 0,
+          width: '50%',
+          height: '100%',
           zIndex: 11,
           pointerEvents: 'none',
           willChange: 'transform'
         }}
       >
         <img 
-          src="/images/gerbang.avif" 
+          src="/images/kanan.webp" 
           alt="" 
           decoding="async"
           style={{
             width: '100%',
             height: '100%',
-            objectFit: 'fill',
-            transform: 'scaleX(-1)'
+            objectFit: 'fill'
           }}
         />
       </motion.div>
