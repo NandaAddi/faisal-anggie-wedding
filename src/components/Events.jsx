@@ -37,7 +37,7 @@ const Events = ({ invitationType }) => {
         width: '100%',
         height: '100%',
         backgroundImage: 'url("/images/border.avif")',
-        backgroundSize: 'cover',
+        backgroundSize: '100% 100%',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         pointerEvents: 'none',
@@ -86,64 +86,24 @@ const Events = ({ invitationType }) => {
             width: '100%',
             height: '100%',
             zIndex: 11,
-            pointerEvents: 'none'
+            pointerEvents: 'auto'
           }}
         >
-          <div style={{
-            width: '100%',
-            height: '100%',
-            backgroundImage: 'url("/images/malang.webp")',
-            backgroundSize: 'contain',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }} />
-          
-          {/* View Map Button for Groom */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 1.2 }}
+          <motion.a
+            href="https://maps.app.goo.gl/fmGoeTmUgq1kojvv7"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
-              position: 'absolute',
-              bottom: '15%',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              zIndex: 20,
-              pointerEvents: 'auto'
+              display: 'block',
+              width: '100%',
+              height: '100%',
+              backgroundImage: 'url("/images/malang.webp")',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              cursor: 'pointer'
             }}
-          >
-            <motion.a
-              whileHover={{ scale: 1.05, backgroundColor: '#FDF9F1' }}
-              whileTap={{ scale: 0.95 }}
-              href="https://maps.app.goo.gl/fmGoeTmUgq1kojvv7"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                backgroundColor: '#E4C88E',
-                color: '#2A1B16',
-                padding: '12px 24px',
-                borderRadius: '50px',
-                textDecoration: 'none',
-                fontWeight: 'bold',
-                fontSize: '0.9rem',
-                fontFamily: 'var(--font-body)',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                border: '1px solid #2A1B16',
-                whiteSpace: 'nowrap',
-                transition: 'background-color 0.3s ease'
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              Lihat Lokasi
-            </motion.a>
-          </motion.div>
+          />
         </motion.div>
       ) : (
         <>
@@ -160,17 +120,24 @@ const Events = ({ invitationType }) => {
               width: '100%',
               height: '100%',
               zIndex: 11,
-              pointerEvents: 'none'
+              pointerEvents: 'auto'
             }}
           >
-            <div style={{
-              width: '100%',
-              height: '100%',
-              backgroundImage: 'url("/images/brebes-akad.webp")',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
-            }} />
+            <motion.a
+              href="https://maps.app.goo.gl/8jR9zGpQnpiVZQMi6?g_st=ic"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'block',
+                width: '100%',
+                height: '100%',
+                backgroundImage: 'url("/images/brebes-akad.webp")',
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                cursor: 'pointer'
+              }}
+            />
           </motion.div>
 
           {/* Resepsi Layer */}
@@ -186,64 +153,24 @@ const Events = ({ invitationType }) => {
               width: '100%',
               height: '100%',
               zIndex: 12,
-              pointerEvents: 'none'
-            }}
-          >
-            <div style={{
-              width: '100%',
-              height: '100%',
-              backgroundImage: 'url("/images/brebes-resepsi.webp")',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat'
-            }} />
-          </motion.div>
-
-          {/* View Map Button for Bride */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 1.2 }}
-            style={{
-              position: 'absolute',
-              bottom: '15%',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              zIndex: 20,
               pointerEvents: 'auto'
             }}
           >
             <motion.a
-              whileHover={{ scale: 1.05, backgroundColor: '#FDF9F1' }}
-              whileTap={{ scale: 0.95 }}
               href="https://maps.app.goo.gl/8jR9zGpQnpiVZQMi6?g_st=ic"
               target="_blank"
               rel="noopener noreferrer"
               style={{
-                backgroundColor: '#E4C88E',
-                color: '#2A1B16',
-                padding: '12px 24px',
-                borderRadius: '50px',
-                textDecoration: 'none',
-                fontWeight: 'bold',
-                fontSize: '0.9rem',
-                fontFamily: 'var(--font-body)',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                border: '1px solid #2A1B16',
-                whiteSpace: 'nowrap',
-                transition: 'background-color 0.3s ease'
+                display: 'block',
+                width: '100%',
+                height: '100%',
+                backgroundImage: 'url("/images/brebes-resepsi.webp")',
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                cursor: 'pointer'
               }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                <circle cx="12" cy="10" r="3"></circle>
-              </svg>
-              Lihat Lokasi
-            </motion.a>
+            />
           </motion.div>
         </>
       )}

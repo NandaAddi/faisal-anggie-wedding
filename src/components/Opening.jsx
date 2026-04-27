@@ -126,7 +126,7 @@ const Opening = ({ isOpen }) => {
         width: '100%',
         height: '100%',
         backgroundImage: 'url("/images/border.avif")',
-        backgroundSize: 'cover',
+        backgroundSize: '100% 100%',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         pointerEvents: 'none',

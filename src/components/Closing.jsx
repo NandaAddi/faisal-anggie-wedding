@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
-const DustParticles = () => {
+const DustParticles = ({ isInView }) => {
   const particles = Array.from({ length: 30 }).map((_, i) => {
     const startX = 50 + (Math.random() * 4 - 2); 
     const startY = 10 + (Math.random() * 80); 
@@ -22,15 +22,15 @@ const DustParticles = () => {
           top: `${startY}%`,
           scale: 0
         }}
-        whileInView={{ 
+        animate={isInView ? { 
           opacity: [0, 0.8, 0],
           left: `${endX}%`,
           top: `${endY}%`,
           scale: [0, 1.5, 0]
-        }}
+        } : {}}
         transition={{ 
           duration: 2.5 + Math.random() * 2, 
-          delay: 1 + Math.random() * 0.8,
+          delay: 5 + Math.random() * 0.8,
           ease: "easeOut"
         }}
         style={{
@@ -50,13 +50,13 @@ const DustParticles = () => {
   return <>{particles}</>;
 };
 
-const SmokeClouds = () => {
+const SmokeClouds = ({ isInView }) => {
   return (
     <>
       <motion.div
         initial={{ opacity: 0, scale: 0.8, y: '50%', x: '-50%' }}
-        whileInView={{ opacity: [0, 0.5, 0], scale: 2, y: '20%', x: '-50%' }}
-        transition={{ duration: 4, delay: 1, ease: 'easeOut' }}
+        animate={isInView ? { opacity: [0, 0.5, 0], scale: 2, y: '20%', x: '-50%' } : {}}
+        transition={{ duration: 4, delay: 5, ease: 'easeOut' }}
         style={{
           position: 'absolute',
           bottom: '0%',
@@ -72,8 +72,8 @@ const SmokeClouds = () => {
       />
       <motion.div
         initial={{ opacity: 0, scale: 0.5, y: '-50%', x: '-50%' }}
-        whileInView={{ opacity: [0, 0.3, 0], scale: 2.5, y: '-60%', x: '-50%' }}
-        transition={{ duration: 3.5, delay: 1.2, ease: 'easeOut' }}
+        animate={isInView ? { opacity: [0, 0.3, 0], scale: 2.5, y: '-60%', x: '-50%' } : {}}
+        transition={{ duration: 3.5, delay: 5.2, ease: 'easeOut' }}
         style={{
           position: 'absolute',
           top: '50%',
@@ -92,8 +92,11 @@ const SmokeClouds = () => {
 };
 
 const Closing = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { amount: 0.1, once: true });
+
   return (
-    <section style={{ 
+    <section ref={ref} style={{ 
       position: 'relative', 
       minHeight: '100vh',
       display: 'flex', 
@@ -122,26 +125,25 @@ const Closing = () => {
         width: '100%',
         height: '100%',
         backgroundImage: 'url("/images/border.avif")',
-        backgroundSize: 'cover',
+        backgroundSize: '100% 100%',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         pointerEvents: 'none',
-        zIndex: 5
+        zIndex: 15
       }} />
 
       {/* Left Gate */}
       <motion.div
         initial={{ x: '-100%' }}
-        whileInView={{ x: 5 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 2.5, ease: 'easeInOut', delay: 0.5 }}
+        animate={isInView ? { x: 5 } : { x: '-100%' }}
+        transition={{ duration: 2.5, ease: 'easeInOut', delay: 5 }} // 5s delay as requested
         style={{
           position: 'absolute',
           top: 0,
           left: 0,
           width: '100%',
           height: '100%',
-          zIndex: 3,
+          zIndex: 11, // Raised above text (10)
           pointerEvents: 'none'
         }}
       >
@@ -158,16 +160,15 @@ const Closing = () => {
       {/* Right Gate */}
       <motion.div
         initial={{ x: '100%' }}
-        whileInView={{ x: -5 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 2.5, ease: 'easeInOut', delay: 0.5 }}
+        animate={isInView ? { x: -5 } : { x: '100%' }}
+        transition={{ duration: 2.5, ease: 'easeInOut', delay: 5 }} // 5s delay as requested
         style={{
           position: 'absolute',
           top: 0,
           left: 0,
           width: '100%',
           height: '100%',
-          zIndex: 3,
+          zIndex: 11, // Raised above text (10)
           pointerEvents: 'none'
         }}
       >
@@ -183,15 +184,14 @@ const Closing = () => {
       </motion.div>
 
       {/* Particle & Smoke Effects */}
-      <DustParticles />
-      <SmokeClouds />
+      <DustParticles isInView={isInView} />
+      <SmokeClouds isInView={isInView} />
 
       {/* Penutup Image Text Layer */}
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={{ duration: 0.8, delay: 2.5 }}
+        animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+        transition={{ duration: 0.8, delay: 0.5 }} // Shows up quickly
         style={{
           position: 'absolute',
           top: 0,
